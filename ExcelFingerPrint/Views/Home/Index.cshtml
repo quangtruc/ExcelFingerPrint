@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@model ExcelFingerPrint.Models.HomeViewModel
+@section styles {
+}
+@section scripts {
+    <script src="~/Scripts/select2.js"></script>
+    <script src="~/Scripts/Script.js"></script>
+}
+
+<div class="row">
+    <div class="col-3">
+        <input type="file" class="form-control" id="file-upload" />
+    </div>
+    <div class="col-1">
+        <button class="btn btn-outline-dark" id="upload-file" placeholder="aaa">Upload</button>
+    </div>
+    <div class="col-3 offset-1">
+        <select id="guest-id" class="form-control select-2" name="state">
+            <option value="">-------Select GuestID-------</option>
+            @foreach (var item in Model.ListGuestID)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+    </div>
+    <div class="col-3">
+        <select id="list-entry-door" class="form-control select-2-multiple" name="states[]" multiple="multiple">
+            @foreach (var item in Model.ListEntryDoor)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+    </div>
+    <div class="col-1">
+        <button class="btn btn-outline-dark" id="search">Search</button>
+    </div>
+</div>
+<form action="/Home/ExportExcel" method="post" class="row mt-3">
+    <div class="col-6 offset-5">
+        <input type="text" class="form-control" id="excelTitle" name="excelTitle" placeholder="Nhập Tiêu đề cho file excel" />
+        <input type="text" class="form-control mt-2" id="excelName" name="excelName" placeholder="Nhập tên file excel" />
+    </div>
+
+    <div class="col-1">
+        <button class="btn btn-outline-dark" id="export-excel" type="submit">Export Excel</button>
+    </div>
+</form>
+<div class="row mt-5">
+    <div class="col-12" id="data-finger-print">
+        @Html.Partial("_Data", Model.FingerPrintData)
+    </div>
+</div>
