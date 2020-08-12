@@ -258,7 +258,7 @@ namespace ExcelFingerPrint.Controllers
             }
 
 
-            var data = await query.OrderBy(x => x.GuestID).ToListAsync();
+            var data = await query.OrderBy(x => x.EntryDoor).ToListAsync();
             TempData["DataSearchFingerPrint"] = data;
             return PartialView("_Data", data);
         }
@@ -279,6 +279,7 @@ namespace ExcelFingerPrint.Controllers
                 workSheet.Cells["A1:I1"].Merge = true;
                 workSheet.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 workSheet.Row(1).Style.Font.Bold = true;
+                workSheet.Row(1).Style.Font.Size = 20;
 
                 workSheet.Row(2).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 workSheet.Row(2).Style.Font.Bold = true;
