@@ -28,7 +28,8 @@ namespace ExcelFingerPrint.Controllers
         {
             var data = await db.FingerPrintDatas.OrderBy(x => x.GuestID).Take(100).ToListAsync();
             var listGuestID = await db.FingerPrintDatas.GroupBy(x => x.GuestID.Trim()).Select(x => x.Key).ToListAsync();
-            var listEntryDoor = await db.FingerPrintDatas.GroupBy(x => x.EntryDoor.Substring(x.EntryDoor.IndexOf(":") + 1)).Select(x => x.Key).ToListAsync();
+            //var listEntryDoor = await db.FingerPrintDatas.GroupBy(x => x.EntryDoor.Substring(x.EntryDoor.IndexOf(":") + 1)).Select(x => x.Key).ToListAsync();
+            var listEntryDoor = await db.FingerPrintDatas.GroupBy(x => x.EntryDoor.Trim()).Select(x => x.Key).ToListAsync();
             var result = new HomeViewModel
             {
                 FingerPrintData = data,
@@ -252,7 +253,8 @@ namespace ExcelFingerPrint.Controllers
                 var predicate = PredicateBuilder.False<FingerPrintData>();
                 foreach (var item in listEntryDoor)
                 {
-                    predicate = predicate.Or(x => x.EntryDoor.Substring(x.EntryDoor.IndexOf(":") + 1) == item);
+                    //predicate = predicate.Or(x => x.EntryDoor.Substring(x.EntryDoor.IndexOf(":") + 1) == item);
+                    predicate = predicate.Or(x => x.EntryDoor.Trim() == item.Trim());
                 }
                 query = query.Where(predicate);
             }
